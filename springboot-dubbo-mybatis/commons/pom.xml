@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.lifeng</groupId>
-	<artifactId>web-api</artifactId>
+	<artifactId>commons</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>web-api</name>
+	<name>commons</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -22,9 +22,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<guava.version>19.0</guava.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -37,43 +43,23 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.lifeng</groupId>
-			<artifactId>service-api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>com.lifeng</groupId>
-			<artifactId>commons</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.6</version>
 		</dependency>
 
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>dubbo</artifactId>
-			<version>2.4.10</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>spring</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.zookeeper</groupId>
-			<artifactId>zookeeper</artifactId>
-			<version>3.4.6</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-log4j12</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.github.sgroschupf</groupId>
-			<artifactId>zkclient</artifactId>
-			<version>0.1</version>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.8.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 
@@ -82,6 +68,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<classifier>exec</classifier>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
