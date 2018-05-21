@@ -2,6 +2,7 @@ package com.lifeng.web.api.config;
 
 import com.lifeng.commons.cache.redis.JedisConfiguration;
 import com.lifeng.commons.cache.redis.RedisClient;
+import com.lifeng.commons.elasticsearch.ElasticSearchClient;
 import com.lifeng.web.api.properties.RedisConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -73,6 +74,16 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     public RedisClient getRedisClient() {
         return new RedisClient(getJedisPool());
+    }
+
+    /**
+     * 初始化jedis配置项目对象
+     * @return
+     */
+    @Bean
+    public ElasticSearchClient getElasticSearchClient() {
+        ElasticSearchClient elasticSearchClient = new ElasticSearchClient("127.0.0.1:9300","elasticsearch");
+        return elasticSearchClient;
     }
 
 
