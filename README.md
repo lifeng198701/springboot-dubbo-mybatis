@@ -1,7 +1,7 @@
 # springboot-dubbo-mybatis
 基于springboot-dubbo-mybatis构架一个通用的开发开发框架</br>
-a:模块介绍:</br>
-commons模块主要是一个公共的模块包含内容,在其他任何模块都可以直接引用,此模块需要要求跟任何其他模块都不耦合</br>
+1:模块介绍:</br>
+a:commons模块主要是一个公共的模块包含内容,在其他任何模块都可以直接引用,此模块需要要求跟任何其他模块都不耦合</br>
     --cache.redis:基于jedis分片客户端</br>
   	--exception:任何其他模块异常类的定义</br>
 		--json:基于jackson对应json的相互转化的工具类</br>
