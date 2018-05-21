@@ -2,8 +2,10 @@ package com.lifeng;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
+@MapperScan(basePackages = "com.lifeng.sdm.serviceimpl.mapper")
 public class ServiceImplApplication {
 	private static volatile boolean running = true;
 	public static void main(String[] args) {
