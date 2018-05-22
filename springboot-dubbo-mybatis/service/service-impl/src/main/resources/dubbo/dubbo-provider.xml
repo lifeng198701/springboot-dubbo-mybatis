@@ -23,4 +23,7 @@
 
     <dubbo:service interface="com.lifeng.sbm.serviceapi.service.UserService"
                    ref="userService" retries="0" timeout="6000" />
+
+    <dubbo:service interface="com.lifeng.sbm.serviceapi.service.ElasticSearchService"
+                   ref="elasticSearchService" retries="0" timeout="6000" />
 </beans>

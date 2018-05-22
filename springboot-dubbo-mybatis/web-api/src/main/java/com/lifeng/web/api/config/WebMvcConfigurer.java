@@ -82,7 +82,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Bean
     public ElasticSearchClient getElasticSearchClient() {
-        ElasticSearchClient elasticSearchClient = new ElasticSearchClient("127.0.0.1:9300","elasticsearch");
+        ElasticSearchClient elasticSearchClient = new ElasticSearchClient("192.168.11.132:9300","es-cluster");
         return elasticSearchClient;
     }
 

@@ -23,4 +23,6 @@
 
     <dubbo:reference interface="com.lifeng.sbm.serviceapi.service.UserService"
                    id="userService"/>
+    <dubbo:reference interface="com.lifeng.sbm.serviceapi.service.ElasticSearchService"
+                     id="elasticSearchService"/>
 </beans>
