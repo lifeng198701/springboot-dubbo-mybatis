@@ -4,22 +4,11 @@
 <h2><a id="user-content-项目介绍" class="anchor" aria-hidden="true" href="#项目介绍"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>项目介绍</h2>
 <p>　　基于springboot+dubbo+Mybatis提供整套公共微服务服务模块：服务模块,控制层模块。</p>
 <h3><a id="user-content-组织结构" class="anchor" aria-hidden="true" href="#组织结构"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>组织结构</h3>
-<div class="highlight highlight-source-lua"><pre>zheng
-├── zheng<span class="pl-k">-</span>config <span class="pl-c"><span class="pl-c">--</span> 配置中心[端口:1001]</span>
-|    ├── <span class="pl-k">-</span>upms<span class="pl-k">-</span>common <span class="pl-c"><span class="pl-c">--</span> upms系</span>
-|    ├── <span class="pl-k">-</span>upms<span class="pl-k">-</span>common <span class="pl-c"><span class="pl-c">--</span> upms系统公共模
-|    ├── <span class="pl-k">-</span>upms<span class="pl-k">-</span>common <span class="pl-c"><span class="pl-c">--</span> upms系统公共模
-├── zheng<span class="pl-k">-</span>commons <span class="pl-c"><span class="pl-c">--</span> SSM框架公共模块</span>
-|    ├── <span class="pl-k">-</span>upms<span class="pl-k">-</span>common <span class="pl-c"><span class="pl-c">--</span> upms系统公共模块</span>
-|    ├── zheng<span class="pl-k">-</span>upms<span class="pl-k">-</span>dao <span class="pl-c"><span class="pl-c">--</span> 代码生成模块，无需开发</span>
-|    ├── zheng<span class="pl-k">-</span>upms<span class="pl-k">-</span>client <span class="pl-c"><span class="pl-c">--</span> 集成upms依赖包，提供单点认证、授权、统一会话管理</span>
-|    ├── zheng<span class="pl-k">-</span>upms<span class="pl-k">-</span>rpc<span class="pl-k">-</span>api <span class="pl-c"><span class="pl-c">--</span> rpc接口包</span>
-|    ├── zheng<span class="pl-k">-</span>upms<span class="pl-k">-</span>rpc<span class="pl-k">-</span>service <span class="pl-c"><span class="pl-c">--</span> rpc服务提供者</span>
-|    └── zheng<span class="pl-k">-</span>upms<span class="pl-k">-</span>server <span class="pl-c"><span class="pl-c">--</span> 用户权限系统及SSO服务端[端口:1111]</span>
-└── zheng<span class="pl-k">-</span>demo <span class="pl-c"><span class="pl-c">--</span> 示例模块(包含一些示例代码等)</span>
-     ├── zheng<span class="pl-k">-</span>demo<span class="pl-k">-</span>rpc<span class="pl-k">-</span>api <span class="pl-c"><span class="pl-c">--</span> rpc接口包</span>
-     ├── zheng<span class="pl-k">-</span>demo<span class="pl-k">-</span>rpc<span class="pl-k">-</span>service <span class="pl-c"><span class="pl-c">--</span> rpc服务提供者</span>
-     └── zheng<span class="pl-k">-</span>demo<span class="pl-k">-</span>web <span class="pl-c"><span class="pl-c">--</span> 演示示例[端口:8888]</span></pre></div>
+<div class="highlight highlight-source-lua"><pre>springboot-dubbo-mybatis
+└──commons<span class="pl-c"><span class="pl-c">--</span> 公共通用模块</span>
+     ├── service<span class="pl-c">--</span> rpc服务层模块</span>
+     ├── sql<span class="pl-c">--</span> 数据库脚本</span>
+     └── web-api<span class="pl-c">--</span> web控制层</span></pre></div>
 <h3><a id="user-content-技术选型" class="anchor" aria-hidden="true" href="#技术选型"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>技术选型</h3>
 <h4><a id="user-content-后端技术" class="anchor" aria-hidden="true" href="#后端技术"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>后端技术:</h4>
 <table>
