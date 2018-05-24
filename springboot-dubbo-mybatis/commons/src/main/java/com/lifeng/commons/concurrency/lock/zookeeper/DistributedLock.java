@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DistributedLock {
 
+    public static final String BZ_PATH = "/BZ_LOCK/";
     private final CuratorFramework client;
     private final String path;
     private final long lockTimeoutMs;
@@ -21,20 +22,53 @@ public class DistributedLock {
 
     public DistributedLock(CuratorFramework client, String path, long lockTimeoutMs) {
         this.client = client;
-        this.path = path;
+        this.path = BZ_PATH + path;
         this.lockTimeoutMs = lockTimeoutMs;
         this.lock = new InterProcessSemaphoreMutex(client, path);
 
     }
 
-    public void acquireLock() {
-        try {
-            boolean acquired = lock.acquire(lockTimeoutMs, TimeUnit.MILLISECONDS);
-            if (!acquired) {
-                LOGGER.error("could not acquire the lock within {} ms", lockTimeoutMs);
-            }
-        } catch(Exception e) {
-            LOGGER.error("Exception while acquiring the lock: {}", e);
+    /**
+     * 一直阻塞的分布式锁
+     * @throws InterruptedException
+     */
+    public void acquireLock() throws InterruptedException{
+        try
+        {
+            lock.acquire();
+        }
+        catch (InterruptedException e)
+        {
+            throw e;
+        }
+        catch (Exception e)
+        {
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 有超时时间的分布式锁
+     * @param timeout
+     * @param unit
+     * @return
+     * @throws InterruptedException
+     */
+    public boolean tryLock(long timeout, TimeUnit unit) throws InterruptedException
+    {
+        try
+        {
+            return lock.acquire(timeout, unit);
+        }
+        catch (InterruptedException e)
+        {
+            throw e;
+        }
+        catch (Exception e)
+        {
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
@@ -46,7 +80,7 @@ public class DistributedLock {
         }
     }
 
-    public void lockedBlock(Runnable runnable) {
+    public void lockedBlock(Runnable runnable) throws InterruptedException {
         acquireLock();
         try {
             runnable.run();

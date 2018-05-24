@@ -1,5 +1,7 @@
 package com.lifeng.web.api.controller;
 import com.lifeng.commons.cache.redis.RedisClient;
+import com.lifeng.commons.concurrency.lock.redis.RedisReentrantLock;
+import com.lifeng.commons.concurrency.lock.zookeeper.DistributedLock;
 import com.lifeng.commons.elasticsearch.ElasticSearchClient;
 import com.lifeng.commons.web.BaseController;
 import com.lifeng.commons.web.FrameResponse;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by lifeng on 2018/5/21.
@@ -33,13 +38,58 @@ public class UserController extends BaseController{
     private RedisClient redisClient;
 
     @Resource
-    ElasticSearchClient elasticSearchClient;
+    private RedisReentrantLock redisReentrantLock;
+
+    @Resource
+    private ElasticSearchClient elasticSearchClient;
+
+    @Resource
+    private DistributedLock distributedLock;
+
 
     @RequestMapping("/getAllUser")
     public FrameResponse getAllUser(){
         TransportClient client = elasticSearchClient.getClient();
         addIndex();
         List<User> list = userService.getAllUser();
+
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+
+//        executorService.submit(() ->{
+//            try {
+//                long a = redisReentrantLock.lock("lifeng");
+//                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaa" + a);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//        executorService.submit(() ->{
+//            try {
+//                long b = redisReentrantLock.lock("lifeng");
+//                System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb" + b);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//
+//        });
+
+        try {
+            distributedLock.tryLock(5, TimeUnit.SECONDS);
+            System.out.println("dddddddddddddddddd");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            distributedLock.releaseLock();
+        }
+
+        try {
+            distributedLock.acquireLock();
+            System.out.println("mmmmmmmmmmmmmmmmmm");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         redisClient.set("fengzai","fengzai");
         return buildSuccessResponse(list).getResponse();
     }

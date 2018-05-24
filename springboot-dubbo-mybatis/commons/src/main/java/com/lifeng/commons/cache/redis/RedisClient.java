@@ -16,17 +16,44 @@ import java.util.*;
 /**
  * Created by lifeng on 2018/5/19.
  * 支持分片
+ * 客户端在调用的时候只需要
+ * 注入JedisConfiguration,对象就可以了
  */
 //@Component
 public class RedisClient implements DisposableBean {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final ShardedJedisPool shardedJedisPool;
+    private ShardedJedisPool shardedJedisPool;
 
-    public RedisClient(ShardedJedisPool shardedJedisPool){
-        this.shardedJedisPool = shardedJedisPool;
+    //主要是取redis其中的一个节点的操作,例如消息订阅
+    private JedisPool jedisPool;
+
+    public RedisClient(JedisConfiguration jedisConfiguration){
+        try {
+            JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+            jedisPoolConfig.setMaxTotal(jedisConfiguration.getMaxTotal());
+            jedisPoolConfig.setMaxIdle(jedisConfiguration.getMaxIdle());
+            jedisPoolConfig.setMaxWaitMillis(jedisConfiguration.getMaxWaitMillis());
+            List<JedisShardInfo> shardList = new ArrayList<>();
+            String servers = jedisConfiguration.getServers();
+            String[] hosts = servers.split(",");
+            for (int i = 0 ; i < hosts.length; i++){
+                String host = hosts[i].split(":")[0];
+                int port = Integer.parseInt(hosts[i].split(":")[1]);
+                shardList.add(new JedisShardInfo(host,port));
+            }
+            // 发布订阅用，取分片中第一个节点
+            JedisShardInfo shardInfo = shardList.get(0);
+            JedisPool jedisPool = new JedisPool(jedisPoolConfig, shardInfo.getHost(), shardInfo.getPort(), 3000);
+            this.shardedJedisPool =  new ShardedJedisPool(jedisPoolConfig, shardList);
+            this.jedisPool = jedisPool;
+        }catch (Exception e){
+            logger.error(e.toString());
+        }
+
     }
+
 
     public void set(byte[] key, byte[] value) {
         ShardedJedis jedis = this.shardedJedisPool.getResource();
