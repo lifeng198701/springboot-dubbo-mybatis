@@ -6,13 +6,17 @@ import com.lifeng.commons.concurrency.lock.redis.RedisReentrantLock;
 import com.lifeng.commons.concurrency.lock.zookeeper.DistributedLock;
 import com.lifeng.commons.elasticsearch.ElasticSearchClient;
 import com.lifeng.commons.zookeeper.DefaultZkClient;
+import com.lifeng.web.api.bind.RequestJsonParamMethodArgumentResolver;
+import com.lifeng.web.api.interceptor.AuthHandlerInterceptor;
 import com.lifeng.web.api.properties.RedisConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by lifeng on 2018/5/17.
@@ -27,7 +31,12 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //新增拦截器
-//        registry.addInterceptor(new AuthHandlerInterceptor()).addPathPatterns("/*");
+        registry.addInterceptor(new AuthHandlerInterceptor()).addPathPatterns("/*");
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new RequestJsonParamMethodArgumentResolver());
     }
     /**
      * 初始化jedis对象

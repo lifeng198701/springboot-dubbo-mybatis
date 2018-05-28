@@ -25,10 +25,8 @@ public class ExceptionHander {
     public FrameResponse errorHandler(HttpServletRequest reqest,
                                       HttpServletResponse response, Exception e) throws Exception {
         boolean error_level = true;
-        //默认错误码
-        String errorCode =  ErrorCodeEnum.DEFAULT.getErrorCode();
-        //默认错误码对应信息
-        String message =  ErrorCodeEnum.DEFAULT.getMessage();
+        int errorCode = -1;
+        String message = "系统内部异常";
         if(e instanceof BusinessException){
             BusinessException paramException = (BusinessException)e;
             errorCode = paramException.getErrorCode();
@@ -38,8 +36,7 @@ public class ExceptionHander {
         if (error_level){
             log.error(e.toString());
         }
-        e.printStackTrace();
-        return new FrameResponseBuilder().buildCode(errorCode)
+        return new FrameResponseBuilder().buildCode(String.valueOf(errorCode))
                 .buildMessage(message).getResponse();
     }
 

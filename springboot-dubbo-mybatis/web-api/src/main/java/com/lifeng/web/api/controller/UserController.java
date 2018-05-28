@@ -1,4 +1,5 @@
 package com.lifeng.web.api.controller;
+
 import com.lifeng.commons.cache.redis.RedisClient;
 import com.lifeng.commons.concurrency.lock.redis.RedisReentrantLock;
 import com.lifeng.commons.concurrency.lock.zookeeper.DistributedLock;
@@ -7,10 +8,11 @@ import com.lifeng.commons.web.BaseController;
 import com.lifeng.commons.web.FrameResponse;
 import com.lifeng.sbm.serviceapi.pojo.User;
 import com.lifeng.sbm.serviceapi.service.UserService;
+import com.lifeng.web.api.annotation.RequestJsonParam;
+import com.lifeng.web.api.annotation.Validate;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by lifeng on 2018/5/21.
@@ -49,11 +48,11 @@ public class UserController extends BaseController{
 
     @RequestMapping("/getAllUser")
     public FrameResponse getAllUser(){
-        TransportClient client = elasticSearchClient.getClient();
-        addIndex();
+//        TransportClient client = elasticSearchClient.getClient();
+//        addIndex();
         List<User> list = userService.getAllUser();
 
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+//        ExecutorService executorService = Executors.newFixedThreadPool(2);
 
 //        executorService.submit(() ->{
 //            try {
@@ -74,23 +73,23 @@ public class UserController extends BaseController{
 //
 //        });
 
-        try {
-            distributedLock.tryLock(5, TimeUnit.SECONDS);
-            System.out.println("dddddddddddddddddd");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }finally {
-            distributedLock.releaseLock();
-        }
-
-        try {
-            distributedLock.acquireLock();
-            System.out.println("mmmmmmmmmmmmmmmmmm");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        redisClient.set("fengzai","fengzai");
+//        try {
+//            distributedLock.tryLock(5, TimeUnit.SECONDS);
+//            System.out.println("dddddddddddddddddd");
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }finally {
+//            distributedLock.releaseLock();
+//        }
+//
+//        try {
+//            distributedLock.acquireLock();
+//            System.out.println("mmmmmmmmmmmmmmmmmm");
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        redisClient.set("fengzai","fengzai");
         return buildSuccessResponse(list).getResponse();
     }
 
@@ -114,5 +113,19 @@ public class UserController extends BaseController{
         });
 
     }
+
+
+    @RequestMapping("/getJsonUser")
+    @Validate
+    public FrameResponse getJsonUser(@RequestJsonParam(value = "userJson") User userJson){
+        System.out.println(userJson.getPassWord() + " " + userJson.getUserName());
+        System.out.println(userJson);
+        User i = new User();
+        i.setPassWord(userJson.getPassWord());
+        i.setUserName(userJson.getUserName());
+        return buildSuccessResponse(i).getResponse();
+    }
+
+
 
 }
