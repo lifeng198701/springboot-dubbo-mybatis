@@ -1,16 +1,16 @@
-package com.lifeng.web.api.validate;
+package com.lifeng.commons.validate;
 
 import com.google.common.base.Joiner;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.groups.Default;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by lifeng on 2018/5/28.

@@ -2,9 +2,9 @@ package com.lifeng.web.api.aspect;
 
 import com.lifeng.commons.exception.ErrorMsg;
 import com.lifeng.commons.util.StringUtil;
+import com.lifeng.commons.validate.ValidatorUtil;
 import com.lifeng.web.api.contants.ErrorCode;
 import com.lifeng.web.api.exception.ParamException;
-import com.lifeng.web.api.validate.ValidatorUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
