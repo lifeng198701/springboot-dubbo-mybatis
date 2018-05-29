@@ -47,7 +47,7 @@
 <td><a href="https://github.com/alibaba/druid">https://github.com/alibaba/druid</a></td>
 </tr>
 <tr>
-<td>FluentValidator</td>
+<td>hibernate-validator</td>
 <td>校验框架</td>
 <td><a href="https://github.com/hibernate/hibernate-validator">https://github.com/hibernate/hibernate-validator</a></td>
 </tr>
