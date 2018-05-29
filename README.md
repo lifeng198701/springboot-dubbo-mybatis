@@ -49,7 +49,7 @@
 <tr>
 <td>FluentValidator</td>
 <td>校验框架</td>
-<td><a href="https://github.com/neoremind/fluent-validator">https://github.com/neoremind/fluent-validator</a></td>
+<td><a href="https://github.com/hibernate/hibernate-validator">https://github.com/hibernate/hibernate-validator</a></td>
 </tr>
 <tr>
 <tr>
